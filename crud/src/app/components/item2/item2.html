@@ -1,0 +1,80 @@
+<div class="container mt-4">
+  <div class="row">
+
+    <div class="col-4 border-end pe-4">
+      <h2 class="mb-3">{{ editingId ? 'Editar' : 'Nuevo' }} Item2</h2>
+
+      <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input formControlName="nombre" class="form-control"
+                 [class.is-invalid]="isInvalid('nombre')"
+                 placeholder="Nombre" />
+          @if (isInvalid('nombre')) {
+            @if (form.get('nombre')?.errors?.['required']) {
+              <div class="invalid-feedback">El nombre es requerido.</div>
+            }
+            @if (form.get('nombre')?.errors?.['minlength']) {
+              <div class="invalid-feedback">Mínimo 2 caracteres.</div>
+            }
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <input formControlName="descripcion" class="form-control"
+                 [class.is-invalid]="isInvalid('descripcion')"
+                 placeholder="Descripción" type="text" />
+          @if (isInvalid('descripcion')) {
+            @if (form.get('descripcion')?.errors?.['required']) {
+              <div class="invalid-feedback">La descripción es requerida.</div>
+            }
+            @if (form.get('descripcion')?.errors?.['maxlength']) {
+              <div class="invalid-feedback">La descripción es demasiado larga.</div>
+            }
+          }
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">{{ editingId ? 'Actualizar' : 'Agregar' }}</button>
+          <button (click)="reset()" class="btn btn-secondary">Limpiar</button>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="col-8 ps-4">
+      <h2 class="mb-3">Lista Item2</h2>
+
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (item of items; track item.id) {
+            <tr>
+              <td><strong>{{ item.nombre }}</strong></td>
+              <td>{{ item.descripcion }}</td>
+              <td class="text-center">
+                <div class="d-flex gap-2 justify-content-center">
+                  <button (click)="edit(item)" class="btn btn-warning btn-sm">Editar</button>
+                  <button (click)="delete(item.id!)" class="btn btn-danger btn-sm">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          }
+          @empty {
+            <tr>
+              <td colspan="3" class="text-center text-muted">No hay registros.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

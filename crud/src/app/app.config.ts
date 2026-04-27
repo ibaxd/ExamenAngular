@@ -7,13 +7,12 @@ import { provideFirebaseApp } from '@angular/fire/app';
 import { provideFirestore } from '@angular/fire/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB4JlofLQnhL2CoY7zahH9My-pCh6ckm_0",
-  authDomain: "angularexamen-e029c.firebaseapp.com",
-  projectId: "angularexamen-e029c",
-  storageBucket: "angularexamen-e029c.firebasestorage.app",
-  messagingSenderId: "658102166464",
-  appId: "1:658102166464:web:2e86625847895360ff5e25",
-  measurementId: "G-ZW17VV3EER"
+  apiKey: "AIzaSyDMfDAu239pOj2dr3VxeTOhT3Vgjp3SCj4",
+  authDomain: "examenangular-d9800.firebaseapp.com",
+  projectId: "examenangular-d9800",
+  storageBucket: "examenangular-d9800.firebasestorage.app",
+  messagingSenderId: "677351659758",
+  appId: "1:677351659758:web:66d8f1def2441611ab3bff"
 };
 
 export const appConfig: ApplicationConfig = {

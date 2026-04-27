@@ -1,0 +1,101 @@
+<div class="container mt-4">
+  <div class="row">
+
+    <div class="col-4 border-end pe-4">
+      <h2 class="mb-3">{{ editingId ? 'Editar' : 'Nueva' }} Calificación</h2>
+
+      <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+
+        <div class="mb-3">
+          <label class="form-label">Item1</label>
+          <select formControlName="item1Id" class="form-select"
+                  [class.is-invalid]="isInvalid('item1Id')">
+            <option value="">-- Selecciona Item1 --</option>
+            @for (i of item1s; track i.id) {
+              <option [value]="i.id">{{ i.nombre }}</option>
+            }
+          </select>
+          @if (isInvalid('item1Id')) {
+            <div class="invalid-feedback">Requerido.</div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Item2</label>
+          <select formControlName="item2Id" class="form-select"
+                  [class.is-invalid]="isInvalid('item2Id')">
+            <option value="">-- Selecciona Item2 --</option>
+            @for (i of item2s; track i.id) {
+              <option [value]="i.id">{{ i.nombre }}</option>
+            }
+          </select>
+          @if (isInvalid('item2Id')) {
+            <div class="invalid-feedback">Requerido.</div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Calificación</label>
+          <input formControlName="calificacion" class="form-control"
+                 [class.is-invalid]="isInvalid('calificacion')"
+                 placeholder="Calificación" type="number" min="0" max="10" />
+          @if (isInvalid('calificacion')) {
+            @if (form.get('calificacion')?.errors?.['required']) {
+              <div class="invalid-feedback">La calificación es requerida.</div>
+            }
+            @if (form.get('calificacion')?.errors?.['min']) {
+              <div class="invalid-feedback">El valor mínimo es 0.</div>
+            }
+            @if (form.get('calificacion')?.errors?.['max']) {
+              <div class="invalid-feedback">El valor máximo es 10.</div>
+            }
+          }
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">{{ editingId ? 'Actualizar' : 'Agregar' }}</button>
+          <button type="button" (click)="reset()" class="btn btn-secondary">Limpiar</button>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="col-8 ps-4">
+      <h2 class="mb-3">Lista de Calificaciones</h2>
+
+      <table class="table table-bordered table-hover align-middle">
+        <thead class="table-dark">
+        <tr>
+          <th>Item1</th>
+          <th>Item2</th>
+          <th class="text-center">Calificación</th>
+          <th class="text-center">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (item of items; track item.id) {
+            <tr>
+              <td><strong>{{ getItem1Nombre(item.item1Id) }}</strong></td>
+              <td>{{ getItem2Nombre(item.item2Id) }}</td>
+              <td class="text-center">
+                <span class="badge bg-primary fs-6">{{ item.calificacion }}</span>
+              </td>
+              <td class="text-center">
+                <div class="d-flex gap-2 justify-content-center">
+                  <button (click)="edit(item)" class="btn btn-warning btn-sm">Editar</button>
+                  <button (click)="delete(item.id!)" class="btn btn-danger btn-sm">Eliminar</button>
+                </div>
+              </td>
+            </tr>
+          }
+          @empty {
+            <tr>
+              <td colspan="4" class="text-center text-muted">No hay calificaciones.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
